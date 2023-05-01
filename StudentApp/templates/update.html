@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+{% load rest_framework %}
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+      <form action="" method="post">
+        {% csrf_token %}
+        {% for i in subject_form %} 
+        <div class='form-group'>
+        {{i.label_tag}} {{i}} <small class="text-danger">{{i.errors|striptags}}</small><br>
+    </div>
+        {% endfor %} 
+    {% if form.non_field_errors %}
+        {% for error in form.non_field_errors %}
+        <p>{{error}}</p>
+        {% endfor %}
+        {% endif %}
+        <button class="btn btn-outline-light btn-lg px-5" type="submit">submit</button>
+    </form>
+        <script src="" async defer></script>
+    </body>
+</html>

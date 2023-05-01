@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{% static 'styles.css' %}">
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    </head>
+<body>
+<header>
+  <div class="container bg-info p-5 ">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">Admin DashBoard</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-item nav-link active text-success">Welcome: {{ user.username }}!!<span class="sr-only"></span></a>
+          {% comment %} <a class="btn btn-primary" href="{% url 'UpdateRecord' %}" role="button">Update Rec</a>  {% endcomment %}
+          <a class="nav-item nav-link" href="http://127.0.0.1:8000/admin/">Admin</a>
+          {% comment %} <div class=pr-2><a class="btn btn-primary" href="{% url 'studentlogin' %}" role="button">Student Login</a></div>  {% endcomment %}
+          <div class=pr-2><a class="btn btn-primary" href="{% url 'login' %}" role="button">Student Login</a></div>
+          <a class="btn btn-primary" href="{% url 'Logout' %}" role="button">Logout</a> 
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+<!---->
+<main>
+<div class="container my-5">
+       <div class="card-body text-center">
+    <h4 class="card-title">Student Data</h4>
+    <!--p class="card-text">With supporting text below as a natural lead-in to additional content.</p-->
+  </div>
+    <div class="card">
+        <!--button id="add__new__list" type="button" class="btn btn-success position-absolute" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fas fa-plus"></i> Add a new List</button-->
+        <div class='split-button col-md-6'>
+        <a class="btn btn-success col-md-3 position-relative" href="{% url 'addstudent_user' %}" role="button">Add Student</a>
+        <a class="btn btn-success col-md-3 position-relative" href="{% url 'addsubject' %}" role="button">Add Subject</a>
+        <a class="btn btn-success col-md-3 position-relative" href="{% url 'combine' %}" role="button">Add Combine</a>
+        </div>
+        <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">Subject ID</th>
+                <th scope="col">Subject</th>
+                <th scope="col">Marks</th>
+                <th scope="col">Student ID</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Date Joined</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+              {% for rec in combi_ned %}
+              <tr>        {% comment %} for student check model(subject) fields carefully {% endcomment %}
+                <td>{{ rec.subject.subj_id }}</td>
+                <td>{{ rec.subject }}</td>
+                <td>{{ rec.marks }}</td>
+                <th scope="row">{{ rec.student.id }}</td>
+                <td>{{ rec.student.first_name }}</td>
+                <td>{{ rec.student.last_name }}</td>
+                <td>{{ rec.student.date_joined }}</td>
+                <td>
+                  <!--------------------------------- Html Modal ---------------------------------------------->
+                  {% comment %} <a href="" class="btn btn-sm btn-primary" data-toggle="modal" data-target='#myModal'>edit</a>
+                  <div class="modal" tabindex="-1" role="dialog" id='myModal'>
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title">Modal title</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body"> <!-- MODAL BODY -->
+                          <<form method='POST' action="">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                          <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                        <!--div class="modal-footer">
+                          <button type="button" class="btn btn-primary">Save changes</button>
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div-->
+                      </div>
+                    </div>
+                  </div> {% endcomment %}
+                  <!-------------------------- Model End ---------------------------------------->
+                  {% comment %} <a class="btn btn-sm btn-primary" href="{% url 'updatedrf' rec.id %}"><i class="fas fa-trash-alt"></i> edit</a> {% endcomment %}
+         <!-- the rec is coming from the above for loop -->          
+                    <a class="btn btn-sm btn-danger" href="#"><i class="fas fa-trash-alt"></i> delete</a>    
+                </td>
+                <!--td><a class="btn btn-sm btn-info" href="#"><i class="fas fa-info-circle"></i> Details</a> </td-->
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <form method="get">
+            {{ user_filter.form }}
+            <button type="submit">Search</button>
+          </form>
+          <ul>
+          {% for user in user_filter.qs %}
+            <li>{{ user.username }} - {{ user.get_full_name }}</li>
+          {% endfor %}
+          </ul>
+          <form method="get">
+            {{ subject_filter.form }}
+            <button type="submit">Search</button>
+          </form>
+          <ul>
+          {% for subject in subject_filter.qs %}
+            <li>{{ subject.Subj_name }}</li>
+          {% endfor %}
+          </ul>
+          <form method="get">
+            {{ subject_filter.form }}
+            <button type="submit">Search</button>
+          </form>
+          <ul>
+          {% for subject in subject_filter.qs %}
+            <li>{{ subject.Subj_name }}</li>
+          {% endfor %}
+          </ul>
+          </div>
+    </div>
+</main>
+<!---->
+
+<!---->
+<footer >
+  <div class="container bg-info p-5">
+	</div>
+</footer>
+</body>
+</html>
+
+
